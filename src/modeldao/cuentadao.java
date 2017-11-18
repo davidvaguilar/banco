@@ -69,7 +69,7 @@ public class cuentadao {
 	                cnn.cerrarConexion();
 	          }
 	        return false;
-	    }
+	   }
 	
 	   public cuenta buscar(cuenta c) {
 	        PreparedStatement ps;

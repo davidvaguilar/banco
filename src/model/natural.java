@@ -34,23 +34,12 @@ public final class natural extends cliente {
 				+ ", perFecNacimiento="	+ perFecNacimiento + "]";
 	}
 
+	/* (non-Javadoc)
+	 * @see model.persona#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		natural other = (natural) obj;
-		if (perRut == null) {
-			if (other.perRut != null)
-				return false;
-		} else if (!perRut.equals(other.perRut))
-			return false;
-		return true;
+		return super.equals(obj);
 	}
-	
-	
-	
+
 }

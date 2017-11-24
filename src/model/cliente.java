@@ -36,9 +36,13 @@ public class cliente extends persona {
 				+ ", perFecNacimiento=" + perFecNacimiento + "]";
 	}
 
-	
-
-
+	/* (non-Javadoc)
+	 * @see model.persona#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 	
 
 }

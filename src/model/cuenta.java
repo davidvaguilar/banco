@@ -11,8 +11,12 @@ public final class cuenta {
 	private cliente cli;
 	
 	public cuenta(String rut) {		
-		this.cli=new cliente(); 
+		this.cli = new cliente(); 
 		cli.setPerRut(rut);
+	}
+	
+	public cuenta(cliente c) {		
+		this.cli = c;
 	}
 
 	public cuenta(Integer cueId, 
@@ -51,9 +55,7 @@ public final class cuenta {
 				+ ", cueSobregiro=" + cueSobregiro 
 				+ ", cli=" + cli + "]";
 	}
-	
-	
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -61,6 +63,7 @@ public final class cuenta {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cli == null) ? 0 : cli.hashCode());
 		result = prime * result + ((cueId == null) ? 0 : cueId.hashCode());
 		return result;
 	}
@@ -77,6 +80,11 @@ public final class cuenta {
 		if (getClass() != obj.getClass())
 			return false;
 		cuenta other = (cuenta) obj;
+		if (cli == null) {
+			if (other.cli != null)
+				return false;
+		} else if (!cli.equals(other.cli))
+			return false;
 		if (cueId == null) {
 			if (other.cueId != null)
 				return false;
@@ -87,10 +95,24 @@ public final class cuenta {
 
 	public boolean depositar(Integer monto) {
 		cuentadao cueDao=new cuentadao();
-		cueDao.buscar(this);
+		this.cueSaldo=cueDao.buscar(this).getCueSaldo();
 		this.setCueSaldo(this.getCueSaldo()+monto);//OPERACION DEPOSITO
 		return cueDao.actualizarSaldo(this);	//ACTUALIZO EL SALDO 
 	}
 	
+	public boolean girar(Integer monto) {
+		cuentadao cueDao=new cuentadao();
+		this.cueSaldo=cueDao.buscar(this).getCueSaldo();
+		if(this.cueSobregiro==1) {
+			this.setCueSaldo(this.getCueSaldo()-monto);//OPERACION DEPOSITO
+			return cueDao.actualizarSaldo(this);
+		}else { 
+			if(this.cueSaldo-monto>=0) {
+				this.setCueSaldo(this.getCueSaldo()-monto);//OPERACION DEPOSITO
+				return cueDao.actualizarSaldo(this);
+			}
+		} 
+		return false;
+	}
 	
 }
